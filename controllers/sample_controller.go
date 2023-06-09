@@ -31,7 +31,9 @@ func (r *SampleReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctr
 		return ctrl.Result{}, err
 	}
 
-	sink(sample.Spec.Foo)
+	sink(sample.Spec.Foo)            // positive test for spec or catch-all
+	sink(sample.Annotations["test"]) // positive test for annotations
+	sink(sample.Namespace)           // negative test for spec/annotations
 
 	return ctrl.Result{}, nil
 }
